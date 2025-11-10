@@ -49,6 +49,7 @@ def hit(list):
     while sum(list) > 21 and 11 in list:
         list[list.index(11)] = 1
     if sum(Hand) > 21:
+        print(Hand)
         bust(0)
 
 def stand():
@@ -63,7 +64,7 @@ def stand():
             print(Hand, Dealer, sum(Hand), sum(Dealer))
             hit(Dealer)
         print(Hand, Dealer, sum(Hand), sum(Dealer))
-        if sum(Hand) > sum(Dealer):
+        if sum(Hand) > sum(Dealer) or sum(Dealer) > 21:
             bust(1)
         elif sum(Hand) < sum(Dealer):
             bust(0)
