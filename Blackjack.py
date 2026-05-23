@@ -1,4 +1,7 @@
 import random
+import os
+import time
+
 
 CONST_Deck = [11, 11, 11, 11, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 9, 9, 9, 9, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2]
 Cards = [11, 11, 11, 11, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 9, 9, 9, 9, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2]
@@ -40,7 +43,7 @@ def bust(int):
         Chips -= Bet
     elif int == 1:
         Chips += Bet
-    deal()
+    Resetting = True
 
 def hit(list):
     global Hand
@@ -73,19 +76,20 @@ def stand():
         Resetting = True
 
 def bet():
-    try:
-        Bet_Input = input("Bet: ")
-    except ValueError:
-        Bet_Input = input("Bet: ")
+    Bet_Input = ""
+    while Bet_Input == "":
+        try:
+            Bet_Input = input("Bet: ")
+        except ValueError:
+            print ("Try Again")
     Bet = max(10, round(int(Bet_Input) / 5) * 5)
     print("Bet =", Bet)
     return Bet
 
 
 while True:
-    action = " "
     deal()
-    print("\n", Hand, Dealer[1])
+    print("\n", "Player: " + str(Hand) + " = " + str(sum(Hand)) + ", Dealer: [" + str(Dealer[1]) + "]")
 
     Resetting = False
     while not Resetting:
@@ -95,7 +99,7 @@ while True:
             if len(Dealer) <= 1:
                 break
             Hand = sorted(Hand, reverse=True)
-            print(Hand, Dealer[1])
+            print("Player: " + str(Hand) + " = " + str(sum(Hand)) + ", Dealer: [" + str(Dealer[1]) + "]")
         elif action == "r":
             reset()
             action = " "
@@ -106,3 +110,8 @@ while True:
             Resetting = True
             break
         action = " "
+    time.sleep(3)
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
